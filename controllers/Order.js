@@ -16,6 +16,7 @@ const axiosNotificationService = require('../services/notificationService')
 
 // axios gọi trực tiếp không thông qua api gateway để tránh lỗi vòng lặp
 const axiosDirectProductService = require('../services/directProductService')
+const axiosDirectStoreService = require('../services/directStoreService')
 
 module.exports.getOrder = async (req, res) => {
     try {
@@ -275,15 +276,18 @@ module.exports.updateOrder = async (req, res) => {
                 status: 'completed'
             });
 
-            console.log('reponse1 data:', response1.data);
+            console.log('reponse data product-service:', response1.data);
 
-            axiosStoreService.put(`/stores/${order.seller_id}/balance`, {
+            console.log('Cập nhật trạng thái đơn hàng đã hoàn tất, cập nhật dữ liệu về số dư cửa hàng');
+            const response2 = await axiosDirectStoreService.put(`/stores/${order.seller_id}/balance`, {
                 balance: order.final_total * 0.75,
                 type: 'add',
             });
+
+            console.log('reponse data store-service:', response2.data);
         }
         else {
-            console.log('Cập nhật trạng thái đơn hàng chưa hoàn tất, không cập nhật dữ liệu về các sản phẩm đã mua');
+            console.log('Cập nhật trạng thái đơn hàng chưa hoàn tất, không cập nhật dữ liệu về các sản phẩm đã mua và số dư cửa hàng');
         }
 
         // Gửi notification dựa vào trạng thái mới
