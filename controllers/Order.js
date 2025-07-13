@@ -311,6 +311,12 @@ module.exports.updateOrder = async (req, res) => {
                             body: `Đơn hàng #${order.id} của bạn đã được xác nhận và sẽ sớm được giao.`
                         });
 
+                        axiosNotificationService.post('/notifications', {
+                            target_type: 'shipper',
+                            title: 'Có đơn giao hàng mới vừa được tạo.',
+                            body: `Đơn giao vận cho đơn hàng #${order.id} vừa được tạo. Vui lòng đến địa điểm lấy hàng.`
+                        });
+
                         axiosShipmentService.post('/shipments/shipping-orders', {
                             order_id: order.id,
                             user_id: order.user_id,
