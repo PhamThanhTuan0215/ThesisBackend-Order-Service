@@ -670,8 +670,15 @@ const sendOrdersInfoEmail = async (token, user_id, orders_info) => {
                 <p>Đơn hàng mới đã được tạo thành công.</p>
                 <br>
                 ${orders_info.map(order => `
+
                     <h2>Đơn hàng từ ${order.seller_name}</h2>
                     <table>
+                        ${order.id && `
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <td>${order.id}</td>
+                            </tr>
+                        `}
                         <tr>
                             <th>Nhà bán</th>
                             <td>${order.seller_name}</td>
