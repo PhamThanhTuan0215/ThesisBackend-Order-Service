@@ -483,28 +483,28 @@ exports.responseReturnRequest = async (req, res) => {
             });
         }
         else {
-            if (req.user.role === 'admin_system' || req.user.role === 'staff_system') {
-                axiosNotificationService.post('/notifications', {
-                    target_type: 'seller',
-                    store_id: order.seller_id,
-                    title: 'Yêu cầu từ chối hoàn trả đã được chấp nhận',
-                    body: `Yêu cầu từ chối hoàn trả #${request.id} đã được chấp nhận.`
-                });
+            // if (req.user.role === 'admin_system' || req.user.role === 'staff_system') {
+            //     axiosNotificationService.post('/notifications', {
+            //         target_type: 'seller',
+            //         store_id: order.seller_id,
+            //         title: 'Yêu cầu từ chối hoàn trả đã được chấp nhận',
+            //         body: `Yêu cầu từ chối hoàn trả #${request.id} đã được chấp nhận.`
+            //     });
 
-                axiosNotificationService.post('/notifications', {
-                    target_type: 'customer',
-                    target_id: order.user_id,
-                    title: 'Yêu cầu hoàn trả của bạn đã bị từ chối',
-                    body: `Yêu cầu hoàn trả #${request.id} của bạn đã bị từ chối.`
-                });
-            }
-            else {
-                axiosNotificationService.post('/notifications', {
-                    target_type: 'platform',
-                    title: 'Có yêu cầu từ chối hoàn trả mới',
-                    body: `Có yêu cầu từ chối hoàn trả mới từ đơn hàng #${order.id}.`
-                });
-            }
+            //     axiosNotificationService.post('/notifications', {
+            //         target_type: 'customer',
+            //         target_id: order.user_id,
+            //         title: 'Yêu cầu hoàn trả của bạn đã bị từ chối',
+            //         body: `Yêu cầu hoàn trả #${request.id} của bạn đã bị từ chối.`
+            //     });
+            // }
+            // else {
+            axiosNotificationService.post('/notifications', {
+                target_type: 'platform',
+                title: 'Có yêu cầu từ chối hoàn trả mới',
+                body: `Có yêu cầu từ chối hoàn trả mới từ đơn hàng #${order.id}.`
+            });
+            // }
         }
 
         await transaction.commit();

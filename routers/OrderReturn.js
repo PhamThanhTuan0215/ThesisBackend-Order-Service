@@ -21,7 +21,7 @@ Router.get('/request/details', Controller.getReturnedOrderDetail)
 Router.get('/request/:id', Controller.getReturnRequestById)
 
 // Phản hồi yêu cầu hoàn trả (chấp nhận/từ chối)
-Router.put('/request/:request_id/response', authenticateToken(['admin_seller', 'staff_seller', 'staff_system', 'admin_system']), Controller.responseReturnRequest)
+Router.put('/request/:request_id/response', Controller.responseReturnRequest)
 
 // Lấy danh sách đơn hàng hoàn trả
 Router.get('/returned-orders', Controller.getReturnedOrders)
